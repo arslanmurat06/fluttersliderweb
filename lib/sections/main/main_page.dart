@@ -15,10 +15,19 @@ class _MainPageState extends State<MainPage> {
       ScrollController(initialScrollOffset: 25.0);
   ItemScrollController _itemScrollController = ItemScrollController();
   ItemPositionsListener _itemPositionListener = ItemPositionsListener.create();
+  Color backgroundColor = Colors.black;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // _itemPositionListener.itemPositions.addListener(
+    //     () => _getScrollPosition(_itemPositionListener.itemPositions.value));
+  }
 
   final List<String> _sectionsName = [
     "Home",
-    "Portfoliio",
+    "Portfolio",
     "Services",
     "Projects",
     "Contact"
@@ -33,7 +42,8 @@ class _MainPageState extends State<MainPage> {
   ];
 
   void _scroll(int i) {
-    _itemScrollController.scrollTo(index: i, duration: Duration(seconds: 1));
+    _itemScrollController.scrollTo(
+        index: i, duration: Duration(milliseconds: 500));
   }
 
   Widget sectionWidget(int i) {
@@ -48,22 +58,37 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
+  // _getScrollPosition(Iterable<ItemPosition> value) {
+  //   if (value.first.index == 1) {
+  //     setState(() {
+  //       print("setstate");
+  //       backgroundColor = Colors.red;
+  //     });
+  //   } else {
+  //     setState(() {
+  //       print("setstate");
+  //       backgroundColor = Colors.black;
+  //     });
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: _appBarTabDesktop(),
         extendBodyBehindAppBar: true,
-        backgroundColor: Colors.black,
+        backgroundColor: backgroundColor,
         body: Container(
           child: RawScrollbar(
             controller: _scrollController,
-            thumbColor: Colors.blue,
+            thumbColor: Colors.grey,
             thickness: 5,
             child: ScrollablePositionedList.builder(
               itemScrollController: _itemScrollController,
               itemPositionsListener: _itemPositionListener,
               itemCount: 3,
               itemBuilder: (context, index) {
+                print(index.toString() + "e geldi");
                 return sectionWidget(index);
               },
             ),
@@ -82,10 +107,28 @@ class _MainPageState extends State<MainPage> {
         delay: Duration(seconds: 3),
       ),
       actions: [
-        Text("About"),
-        Text("Portfolio"),
-        Text("Showcase"),
+        for (int i = 0; i < _sectionsName.length; i++)
+          _appBarActions(_sectionsName[i], i, _sectionsIcons[i]),
       ],
+    );
+  }
+
+  Widget _appBarActions(String childText, int index, IconData icon) {
+    return Fader(
+      offset: Offset(0, -20),
+      duration: Duration(milliseconds: 400 * index),
+      delay: Duration(seconds: 1),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: MaterialButton(
+          hoverColor: Colors.green,
+          onPressed: () => _scroll(index),
+          child: Text(
+            childText,
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
     );
   }
 }

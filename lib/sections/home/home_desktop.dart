@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:layout/animation/entrance_fader.dart';
 import 'package:layout/widgets/navbar_desktop.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class HomeDesktop extends StatefulWidget {
   @override
@@ -10,31 +12,28 @@ class HomeDesktop extends StatefulWidget {
 class _HomeDesktopState extends State<HomeDesktop> {
   @override
   Widget build(BuildContext context) {
+    print("home build");
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Container(
-      color: Colors.red,
+      color: Colors.black,
       height: height,
       width: width,
-      child: Column(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            "Selam",
-            style: TextStyle(fontSize: 40, color: Colors.white),
-          ),
-          Text(
-            "Ben Murat",
-            style: TextStyle(fontSize: 30, color: Colors.white),
-          ),
-          Text(
-            "Naber",
-            style: TextStyle(fontSize: 30, color: Colors.white),
-          ),
-          Text(
-            "Bunlar home sayfasından",
-            style: TextStyle(fontSize: 30, color: Colors.white),
-          )
+          TyperAnimatedTextKit(
+              isRepeatingAnimation: true,
+              speed: Duration(milliseconds: 100),
+              textStyle: GoogleFonts.montserrat(
+                  color: Colors.white,
+                  fontSize: height * 0.03,
+                  fontWeight: FontWeight.w200),
+              text: [
+                " Software Engineer",
+                " .NET Earner",
+                " Flutter Enthusiast"
+              ]),
         ],
       ),
     );

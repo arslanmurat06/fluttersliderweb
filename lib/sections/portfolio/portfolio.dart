@@ -9,6 +9,8 @@ class PortfolioPage extends StatefulWidget {
 
   @override
   _PortfolioPageState createState() => _PortfolioPageState();
+
+  refreshAnimation() {}
 }
 
 class _PortfolioPageState extends State<PortfolioPage> {
